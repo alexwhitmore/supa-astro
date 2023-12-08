@@ -1,0 +1,31 @@
+---
+const { redirect } = Astro;
+import Layout from './layout.astro';
+import ProfileForm from '../components/ProfileForm.astro'
+import Avatar from '../components/Avatar.astro'
+import { supabase } from "../lib/supabase";
+
+const { data } = await supabase.auth.getSession()
+const userEmail = data.session?.user.email
+
+if (data.session === null) {
+  return redirect("/");
+}
+---
+
+<Layout>
+  <div class="wrapper">
+    <h1>Welcome {userEmail}</h1>
+    <p>We are happy to see you here</p>
+    <Avatar />
+    <ProfileForm userEmail={userEmail} supabase={supabase} userId={data.session?.user.id} />
+  </div>
+</Layout>
+
+<style>
+  .wrapper {
+    width: min(100%, 800px);
+    padding: 0 2rem;
+    margin: 0 auto;
+  }
+</style>

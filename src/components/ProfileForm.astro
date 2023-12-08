@@ -1,0 +1,43 @@
+---
+const { userEmail, supabase, userId } = Astro.props
+
+const { data: profile, error } = await supabase
+        .from('profiles')
+        .select(`username, website, avatar_url`)
+        .eq('id', userId)
+        .single()
+---
+
+<section>
+  <form class="form-widget" action="/api/profile/update" method="post">
+    <label for="email" class='inputField'>Email</label>
+    <input name="email" id="email" id="email" value={userEmail} disabled />
+
+    <label for="username" class="inputField">Name</label>
+    <input
+      id="username"
+      name="username"
+      type="text"
+      required
+      value={profile?.username || ''}
+      />
+
+    <label for="website" class="inputField">Website</label>
+    <input
+      id="website"
+      name="website"
+      type="url"
+      value={profile?.website || ''}
+      />
+
+    <button class="button primary block" type="submit">
+      UPDATE
+    </button>
+  </form>
+
+  <form action="/api/auth/signout" method="get">
+    <button class="button block" type="submit">
+      Sign Out
+    </button>
+  </form>
+</section>

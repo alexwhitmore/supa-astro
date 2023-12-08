@@ -1,0 +1,39 @@
+---
+import { supabase } from '../lib/supabase';
+
+const { data, error } = await supabase.storage.from('avatars').download('avatar1.png')
+const url = URL.createObjectURL(data)
+
+console.log(url);
+---
+
+<script type="module">
+  async function loadAvatar() {
+    try {
+      const response = await fetch('/api/profile/avatar');
+      if (!response.ok) throw new Error('Failed to load avatar');
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      document.getElementById('profile-picture').src = url;
+    } catch (error) {
+      console.error('Error loading avatar:', error);
+    }
+  }
+
+  loadAvatar();
+</script>
+
+<img src={url} id="profile-picture" alt="Profile picture" />
+
+<div>
+  <label class="button primary block" for="single">
+    <!-- {uploading ? 'Uploading ...' : 'Upload'} -->
+    Upload
+  </label>
+  <form action="/api/profile/avatar">
+    <input type="file" id="file" name="file">
+    <input type="submit">
+  </form>
+</div>
+</div>

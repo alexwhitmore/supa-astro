@@ -1,0 +1,16 @@
+<section>
+  <div class="row flex flex-center">
+    <div class="col-6 form-widget">
+      <h1 class="header">Supabase + Astro</h1>
+      <p class="description">Sign up with your email and password!</p>
+      <form action="/api/auth/register" method="post" class='form-widget'>
+        <label for="email" class='inputField'>Email</label>
+        <input type="email" name="email" id="email" />
+        <label for="password" for="password" class='inputField'>Password</label>
+        <input type="password" name="password" id="password" />
+        <button type="submit" class='button block'>Sign up</button>
+        <button formaction="/api/auth/signin" type="submit" class='button block'>Sign in</button>
+      </form>
+    </div>
+  </div>
+</section>
